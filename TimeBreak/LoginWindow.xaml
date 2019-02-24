@@ -1,0 +1,31 @@
+﻿<Window x:Class="TimeBreak.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TimeBreak"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d" Width="250" Height="370"
+        Background="#262624" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None">
+
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Frame Grid.Row="0" Name="Taskbar"/>
+
+        <StackPanel Grid.Row="1" Margin="20">
+            <Image Source="/Image/login_avatar.png" Height="100"/>
+            <Label Name="UsernameLabel" Content="Username" Foreground="#cccccc" FontSize="18"/>
+            <TextBox Name="loginUsername" Background="Transparent" Foreground="#eafdff" FontSize="16" BorderThickness="0,0,0,1.5" BorderBrush="#049e7c"/>
+
+            <Label Name="PasswordLabel" Content="Passwort" Foreground="#cccccc" FontSize="18"/>
+            <PasswordBox Name="loginPassword" Background="Transparent" Foreground="#eafdff" FontSize="16" BorderThickness="0,0,0,1.5" BorderBrush="#049e7c"/>
+
+            <Button Name="Login_Button" Click="Login_Button_Click" Content="Login" Background="Transparent" BorderThickness="2.5" BorderBrush="#049e7c" Foreground="#049e7c" FontWeight="DemiBold" Margin="10,35"/>
+        </StackPanel>
+    </Grid>
+</Window>

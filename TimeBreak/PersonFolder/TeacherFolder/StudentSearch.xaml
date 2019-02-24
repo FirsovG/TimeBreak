@@ -1,0 +1,76 @@
+﻿<Window x:Class="TimeBreak.PersonFolder.TeacherFolder.StudentSearch"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TimeBreak.PersonFolder.TeacherFolder"
+        mc:Ignorable="d"
+        Background="#262624"
+        Title="StudentSearch" Height="200" Width="520" WindowStyle="None" ResizeMode="NoResize">
+
+    <Window.Resources>
+
+        <SolidColorBrush x:Key="brushWatermarkBackground" Color="White" />
+        <SolidColorBrush x:Key="brushWatermarkForeground" Color="LightSteelBlue" />
+        <SolidColorBrush x:Key="brushWatermarkBorder" Color="Indigo" />
+
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <local:TextInputToVisibilityConverter x:Key="TextInputToVisibilityConverter" />
+
+
+    </Window.Resources>
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Frame Grid.Row="0" Name="Taskbar"/>
+
+        <StackPanel Grid.Row="1">
+
+            <Label Content="Bitte den Namen und Vornamen eingeben" Foreground="#cccccc" HorizontalAlignment="Center" FontSize="22" Margin="0,10"/>
+            <Grid Margin="6,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width=".5*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width=".5*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width=".5*"/>
+                </Grid.ColumnDefinitions>
+
+               
+
+                <Grid Grid.Column="1">
+                    <TextBlock Text="Vorname" Foreground="#d0e3e5" FontSize="18" Margin="2,4,5,0"
+                       Visibility="{Binding ElementName=Firstname, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    <TextBox Name="Firstname" Foreground="#e6fdff" Background="Transparent" FontSize="18" BorderBrush="#049e7c" BorderThickness="0,0,0,1.5"/>
+                </Grid>
+
+                <Grid Grid.Column="3">
+                    <TextBlock Text="Nachname" Foreground="#d0e3e5" FontSize="18" Margin="2,4,5,0"
+                       Visibility="{Binding ElementName=Surname, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    <TextBox Name="Surname" Foreground="#e6fdff" Background="Transparent" FontSize="18" BorderBrush="#049e7c" BorderThickness="0,0,0,1.5"/>
+                </Grid>
+
+            </Grid>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="4.5*"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="0.3*"/>
+                    <ColumnDefinition Width="1.2*"/>
+                    <ColumnDefinition Width="0.3*"/>
+                </Grid.ColumnDefinitions>
+
+                <Button Content="Ok" Background="#049e7c" Foreground="#e6fdff" Grid.Column="1" Click="Ok_Button_Click" BorderBrush="Transparent"/>
+                <Button Content="Cancel" Background="#049e7c" Foreground="#e6fdff" Grid.Column="3" Click="Cancel_Button_Click" BorderBrush="Transparent"/>
+
+            </Grid>
+        </StackPanel>
+
+    </Grid>
+</Window>

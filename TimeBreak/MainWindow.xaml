@@ -1,0 +1,65 @@
+﻿<Window x:Class="TimeBreak.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TimeBreak"
+        mc:Ignorable="d"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Background="#1e1e1c"
+        Height="450" Width="800"
+        Closed="Window_Closed" WindowStyle="None">
+    
+    <WindowChrome.WindowChrome>
+        <WindowChrome 
+        CaptionHeight="0"
+        ResizeBorderThickness="5" />
+    </WindowChrome.WindowChrome>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Frame Grid.Row="0" Name="Taskbar"/>
+
+        <Grid Grid.Row="1">
+            <!--Definition von Spalten-->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="3.75*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid Background="#1e1e1c">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height=".3*"/>
+                    <RowDefinition Height="128"/>
+
+                    <RowDefinition Height=".2*"/>
+                    <RowDefinition Height="*"/>
+
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height=".3*"/>
+                </Grid.RowDefinitions>
+
+                <Image Grid.Row="1" Name="ProfilePhoto" Height="128"/>
+
+                <StackPanel Grid.Row="3">
+                    <TextBlock Name="PersonName" FontWeight="Light" HorizontalAlignment="Center" FontSize="16" Foreground="#e6fdff"/>
+                    <TextBlock Name="PersonDescription" FontWeight="Light" HorizontalAlignment="Center" FontSize="16" Foreground="#e6fdff"/>
+                </StackPanel>
+
+                <Label Grid.Row="5" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Made by German Firsov" Foreground="#cccccc" FontSize="13"/>
+            </Grid>
+
+
+
+            <!--Designborder um zwei Spalten zu trennen-->
+            <Border BorderBrush="DarkGray" BorderThickness="0,0,.2,0"/>
+
+            <!--Grid wo sich Hauptpanel befindet-->
+            <Frame Grid.Column="1" x:Name="Workspace"/>
+        </Grid>
+    </Grid>
+</Window>

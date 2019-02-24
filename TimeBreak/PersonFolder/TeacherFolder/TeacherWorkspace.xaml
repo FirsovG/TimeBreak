@@ -1,0 +1,23 @@
+﻿<Page x:Class="TimeBreak.PersonFolder.TeacherFolder.TeacherWorkspace"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:TimeBreak.PersonFolder.TeacherFolder"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Background="#262624"
+      Title="TeacherWorkspace">
+
+    <Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Button Grid.Column="0" Name="ClickButton" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Schueler Beobachten" MinHeight="100" MinWidth="200" FontSize="20" Background="#049e7c" Foreground="#e6fdff" BorderThickness="0" Click="ClickButton_Click"/>
+        <Button Grid.Column="1" Name="FileDialogButton" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Imoprtier neue user" MinHeight="100" MinWidth="200" FontSize="20" Background="#049e7c" Foreground="#e6fdff" BorderThickness="0" Click="FileDialogButton_Click"/>
+
+    </Grid>
+</Page>

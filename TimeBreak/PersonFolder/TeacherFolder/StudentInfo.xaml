@@ -1,0 +1,33 @@
+﻿<Window x:Class="TimeBreak.PersonFolder.TeacherFolder.StudentInfo"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TimeBreak.PersonFolder.TeacherFolder"
+        mc:Ignorable="d"
+        Height="450" Width="450" Background="#262624" ResizeMode="NoResize" WindowStyle="None">
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Frame Grid.Row="0" Name="Taskbar"/>
+
+        <StackPanel Grid.Row="1">
+            <Label Content="Info" Foreground="#cccccc" HorizontalAlignment="Center" FontSize="32" Margin="0,20"/>
+
+            <Label Name="Firstname" Content="Vorname: " Foreground="#cccccc" Grid.Column="0" Grid.Row="0" FontSize="18" VerticalAlignment="Center" Margin="20,10"/>
+            <Label Name="Surname" Content="Nachname: " Foreground="#cccccc" Grid.Column="1" Grid.Row="0" FontSize="18" VerticalAlignment="Center" Margin="20,10"/>
+
+            <Label Name="Username" Content="Matrikelnummer: " Foreground="#cccccc" Grid.Column="0" Grid.Row="1" FontSize="16" VerticalAlignment="Center" Margin="20,10"/>
+            <Label Name="StudentClass" Content="Klasse: " Foreground="#cccccc" Grid.Column="1" Grid.Row="1" FontSize="16" VerticalAlignment="Center" Margin="20,10"/>
+
+            <Button Content="Ok" FontSize="16" Height="30" Width="100" VerticalAlignment="Bottom" Background="Transparent" BorderThickness="2.5" BorderBrush="#049e7c" Foreground="#049e7c" FontWeight="DemiBold" Margin="0,40" Click="Button_Click"/>
+        </StackPanel>
+
+    </Grid>
+    
+</Window>
