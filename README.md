@@ -19,6 +19,7 @@ This is an school project which is made to manage breaks in school project weeks
 * [Visual Studio-IDE](https://visualstudio.microsoft.com/vs/) - IDE
 * [Visio](https://products.office.com/de-de/visio/flowchart-software/) - Databaseplan
 * [Xampp](https://www.apachefriends.org/index.html/) - Pack with MySql-Server
+* [Costura](https://github.com/Fody/Costura) - Build single .exe file
 
 ## Made by
 
