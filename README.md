@@ -12,7 +12,7 @@ This is an school project which is made to manage breaks in school project weeks
 ## Deployment
 
 1. Run mySql-Server
-2. Start the programm
+2. Start TimeBreak.exe
 
 ## Built With
 
