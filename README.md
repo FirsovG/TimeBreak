@@ -28,6 +28,6 @@ This is an school project which is made to manage breaks in school project weeks
 ## Acknowledgments
 
 * [WPF Design](https://www.youtube.com/channel/UCf0J9AO-KeLEkBe3ZpVpfKQ/videos)
-* [Stackoverflow)))](https://stackoverflow.com/)
+* [Stackoverflow](https://stackoverflow.com/)
 * [Programming-guide](https://docs.microsoft.com/dotnet/csharp/programming-guide/)
 * etc
