@@ -10,7 +10,7 @@ namespace TimeBreak
     public class Pause
     {
 
-        #region Fiels
+        #region Fields
         private DateTime startTime;
         private string abode;
         private int breakId;

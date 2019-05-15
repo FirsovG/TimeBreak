@@ -17,12 +17,12 @@ namespace TimeBreak
 
         #region Constructor
         // Standartkonstruktor für den Schüler der auf den Konstruktor der Mutterklasse basiert
-        public Student(string username, string surname, string firstname, StudentClass studentClass, DateTime creationTime)
+        public Student(string username, string surname, string firstname, StudentClass studentClass, DateTime creationTime, DBConnector databaseConnection)
         {
             this.Surname = surname;
             this.Firstname = firstname;
             this.Username = username;
-            this.studentAttendance = new StudentAttendance(creationTime);
+            this.studentAttendance = new StudentAttendance(creationTime, databaseConnection, username);
             this.Attendance = studentAttendance;
             this.studentClass = studentClass;
         }

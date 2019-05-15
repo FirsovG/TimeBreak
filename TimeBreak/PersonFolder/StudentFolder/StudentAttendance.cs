@@ -11,33 +11,39 @@ namespace TimeBreak.PersonFolder.StudentFolder
     {
 
         #region Fields
-        private Pause[] breakTimes = new Pause[4];
+        private const int maxBreakCount = 4;
+        private Pause[] breakTimes = new Pause[maxBreakCount];
         private bool takeABreak = false;
         private int breakCount = 0;
+        private int breakId = 0;
+        private int lastBreakId = 0;
         private int lastBreakTimestamp = 0;
+        DateTime startTime = DateTime.Now;
         #endregion
 
         #region Constructor
-        public StudentAttendance(DateTime creationTime) : base(creationTime)
+        public StudentAttendance(DateTime creationTime, DBConnector databaseConnection, string username) : base(creationTime)
         {
             this.takeABreak = false;
+            lastBreakId = databaseConnection.GetLastBreakId(username, startTime, out breakId, out breakCount);
+            lastBreakTimestamp = databaseConnection.GetLastBreakTimestamp(lastBreakId, username, startTime);
         }
         #endregion
 
         #region Functions
         public void MakeBreak(string aufenthaltsort, DBConnector databaseConnection, string username)
         {
-            DateTime startTime = DateTime.Now;
-            breakCount = databaseConnection.GetLastBreakId(username, startTime) + 1;
-            lastBreakTimestamp = databaseConnection.GetLastBreakTimestamp(breakCount - 1, username, startTime);
-            breakTimes[breakCount - 1] = new Pause(breakCount, lastBreakTimestamp, aufenthaltsort, databaseConnection, username, startTime);
+            lastBreakId = databaseConnection.GetLastBreakId(username, startTime, out breakId, out breakCount);
+            lastBreakTimestamp = databaseConnection.GetLastBreakTimestamp(lastBreakId, username, startTime);
+            breakTimes[breakCount] = new Pause(breakId, lastBreakTimestamp, aufenthaltsort, databaseConnection, username, startTime);
             takeABreak = true;
         }
 
         public void GetBack()
         {
-            breakTimes[breakCount - 1].GetBack();
+            breakTimes[breakCount].GetBack();
             takeABreak = false;
+            breakCount++;
         }
         #endregion
 

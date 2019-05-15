@@ -38,7 +38,7 @@ namespace TimeBreak.PersonFolder.StudentFolder
 
 
             //Prüft wie viele pausen gemacht wurden, ob der jenige grade in der Pause ist
-            if (student.StudentAttendance.BreakCount > 4)
+            if (student.StudentAttendance.BreakCount >= 4)
             {
                 MessageBox.Show("Du hast zu viele Pausen gemacht");
             }

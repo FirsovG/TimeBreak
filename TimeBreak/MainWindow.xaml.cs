@@ -25,7 +25,7 @@ namespace TimeBreak
         private DBConnector databaseConnection;
         private Person user;
         private StudentClass studentClass;
-        private const string classRoom = "C207"; 
+        private const string classRoom = "C205"; 
         #endregion
 
         #region Constuctor
@@ -100,7 +100,7 @@ namespace TimeBreak
             }
             else
             {
-                user = new Student(username, userSurname, userFirstname, studentClass, timeOfCreation);
+                user = new Student(username, userSurname, userFirstname, studentClass, timeOfCreation, databaseConnection);
                 userImage = "student.png";
                 Student student = (Student)user;
                 // Unter den Namen wird die Klasse angezeigt

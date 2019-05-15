@@ -95,7 +95,7 @@ namespace TimeBreak
                 reader.Close();
 
                 // Sql-Kommand welches die Anwesenheit einträgt 
-                query = "INSERT INTO tab_anwesenheit(A_Datum, A_Klassenraum, M_Matrikelnummer, A_Anfangszeit) VALUES (@Date, @ClassRoom, @Username, @DateStart)";
+                query = "INSERT INTO tab_Anwesenheit(A_Datum, A_Klassenraum, M_Matrikelnummer, A_Anfangszeit) VALUES (@Date, @ClassRoom, @Username, @DateStart)";
                 sqlCommand = new MySqlCommand(query, connection);
                 sqlCommand.Parameters.AddWithValue("@Date", startTime.ToString("yyyy-MM-dd"));
                 sqlCommand.Parameters.AddWithValue("@ClassRoom", classRoom);
@@ -103,7 +103,7 @@ namespace TimeBreak
                 sqlCommand.Parameters.AddWithValue("@DateStart", startTime.ToString("HH:mm:ss"));
                 sqlCommand.ExecuteScalar();
 
-                query = "SELECT A_ID, A_Gesamtzeit FROM tab_anwesenheit WHERE M_Matrikelnummer=@Username AND A_Datum=@Date";
+                query = "SELECT A_ID, A_Gesamtzeit FROM tab_Anwesenheit WHERE M_Matrikelnummer=@Username AND A_Datum=@Date";
                 sqlCommand = new MySqlCommand(query, connection);
                 sqlCommand.Parameters.AddWithValue("@Username", username);
                 sqlCommand.Parameters.AddWithValue("@Date", startTime.ToString("yyyy-MM-dd"));
@@ -125,6 +125,7 @@ namespace TimeBreak
                 }
 
                 // Schlißt die Connection und gibt den Tuple zurück
+                reader.Close();
                 connection.Close();
                 return Data;
             }
@@ -133,7 +134,7 @@ namespace TimeBreak
             return new Tuple<string, DateTime, string, string, string, bool>(null, DateTime.Now, null, null, null, false);
         }
 
-        public int GetLastBreakId(string username, DateTime startTime)
+        public int GetLastBreakId(string username, DateTime startTime, out int breakId, out int breakCount)
         {
 
             if (connection.State == System.Data.ConnectionState.Closed)
@@ -141,33 +142,50 @@ namespace TimeBreak
                 connection.Open();
             }
 
-            string query = "SELECT P_ID FROM tab_pause WHERE M_Matrikelnummer=@Username AND A_Datum=@Date";
+            breakId = 1;
+
+            string query = "SELECT P_ID FROM tab_Pause ORDER BY P_ID DESC LIMIT 1";
             MySqlCommand sqlCommand = new MySqlCommand(query, connection);
-            sqlCommand.Parameters.AddWithValue("@Username", username);
-            sqlCommand.Parameters.AddWithValue("@Date", startTime.ToString("yyyy-MM-dd"));
 
             MySqlDataReader reader = sqlCommand.ExecuteReader();
-
-            int breakId = 0;
 
             while (reader.Read())
             {
                 if (!DBNull.Value.Equals(reader["P_ID"]))
                 {
-                    int tmp = Convert.ToInt32(reader["P_ID"]);
-                    if (tmp > breakId)
-                    {
-                        breakId = tmp;
-                    }
+                    breakId = Convert.ToInt32(reader["P_ID"]) + 1;
+                }
+            }
+
+            reader.Close();
+
+            query = "SELECT P_ID, COUNT(P_ID) AS P_Count FROM tab_Pause WHERE M_Matrikelnummer=@Username AND A_Datum=@Date";
+            sqlCommand = new MySqlCommand(query, connection);
+            sqlCommand.Parameters.AddWithValue("@Username", username);
+            sqlCommand.Parameters.AddWithValue("@Date", startTime.ToString("yyyy-MM-dd"));
+
+            reader = sqlCommand.ExecuteReader();
+
+            int lastBreakId = 0;
+            breakCount = 0;
+
+            while (reader.Read())
+            {
+                if (!DBNull.Value.Equals(reader["P_ID"]))
+                {
+                    breakCount = Convert.ToInt32(reader["P_Count"]);
+                    lastBreakId = Convert.ToInt32(reader["P_ID"]);
                 }
                 else
                 {
+                    reader.Close();
                     return 0;
                 }
             }
+
             reader.Close();
             connection.Close();
-            return breakId;
+            return lastBreakId;
         }
 
         public int GetLastBreakTimestamp(int breakId, string username, DateTime startTime)
@@ -178,7 +196,7 @@ namespace TimeBreak
                 connection.Open();
             }
 
-            string query = "SELECT P_Gesamtzeit FROM tab_pause WHERE P_ID=@BreakId AND M_Matrikelnummer=@Username AND A_Datum=@Date";
+            string query = "SELECT P_Gesamtzeit FROM tab_Pause WHERE P_ID=@BreakId AND M_Matrikelnummer=@Username AND A_Datum=@Date";
             MySqlCommand sqlCommand = new MySqlCommand(query, connection);
             sqlCommand.Parameters.AddWithValue("@BreakId", breakId);
             sqlCommand.Parameters.AddWithValue("@Username", username);
@@ -209,7 +227,7 @@ namespace TimeBreak
                 connection.Open();
             }
 
-            string query = "INSERT INTO tab_pause(A_ID, A_Datum, M_Matrikelnummer, P_Anfangszeit, P_Aufenthaltsort) VALUES(@A_Id, @Date, @Username, @P_Start, @P_Platz);";
+            string query = "INSERT INTO tab_Pause(A_ID, A_Datum, M_Matrikelnummer, P_Anfangszeit, P_Aufenthaltsort) VALUES(@A_Id, @Date, @Username, @P_Start, @P_Platz);";
             MySqlCommand sqlCommand = new MySqlCommand(query, connection);
             sqlCommand.Parameters.AddWithValue("@A_Id", attendanceId);
             sqlCommand.Parameters.AddWithValue("@Date", startTime.ToString("yyyy-MM-dd"));
@@ -228,7 +246,7 @@ namespace TimeBreak
                 connection.Open();
             }
 
-            string query = "UPDATE tab_pause SET P_Endzeit=@P_Stop, P_Gesamtzeit=@UnixTimestamp WHERE A_Datum=@Date AND M_Matrikelnummer=@Username AND P_ID=@ID";
+            string query = "UPDATE tab_Pause SET P_Endzeit=@P_Stop, P_Gesamtzeit=@UnixTimestamp WHERE A_Datum=@Date AND M_Matrikelnummer=@Username AND P_ID=@ID";
             MySqlCommand sqlCommand = new MySqlCommand(query, connection);
             sqlCommand.Parameters.AddWithValue("@P_Stop", DateTime.Now.ToString("HH:mm:ss"));
             sqlCommand.Parameters.AddWithValue("@UnixTimestamp", DateTime.Now.Subtract(startTime).TotalSeconds + breakTimestamp);
@@ -260,7 +278,7 @@ namespace TimeBreak
         }
 
         // Eine Funktion die ein Tupel zurückgibt in den Daten über den Student stehen
-        public Tuple<string, string, string, string> GetStudentInfo(string surname, string firstname)
+        public Tuple<string, string, string, string, string> GetStudentInfo(string surname, string firstname)
         {
 
             if (connection.State == System.Data.ConnectionState.Closed)
@@ -279,6 +297,7 @@ namespace TimeBreak
             // Temporäre Variablen
             string username = "";
             string studentClass = "";
+            string abode = classRoom;
 
             // Speichern von Daten in die Variablen
             while (reader.Read())
@@ -287,9 +306,42 @@ namespace TimeBreak
                 studentClass = reader["M_Klasse"].ToString();
             }
 
+            reader.Close();
+
+            query = "SELECT tab_Anwesenheit.A_Endzeit FROM tab_Anwesenheit WHERE tab_Anwesenheit.M_Matrikelnummer =@Username ORDER BY tab_Anwesenheit.A_ID DESC LIMIT 1;";
+            sqlCommand = new MySqlCommand(query, connection);
+            sqlCommand.Parameters.AddWithValue("@Username", username);
+
+            reader = sqlCommand.ExecuteReader();
+
+            if (reader.Read())
+            {
+                if (!DBNull.Value.Equals(reader["A_Endzeit"]))
+                {
+                    abode = "Abgemeldet";
+                }
+                else
+                {
+                    reader.Close();
+                    query = "SELECT tab_Pause.P_Endzeit, tab_Pause.P_Aufenthaltsort FROM tab_Pause WHERE tab_Pause.M_Matrikelnummer =@Username ORDER BY tab_Pause.P_ID DESC LIMIT 1;";
+                    sqlCommand = new MySqlCommand(query, connection);
+                    sqlCommand.Parameters.AddWithValue("@Username", username);
+
+                    reader = sqlCommand.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        if (DBNull.Value.Equals(reader["P_Endzeit"]))
+                        {
+                            abode = reader["P_Aufenthaltsort"].ToString();
+                        }
+                    }
+                }
+            }
+
             // Erstellung von Tuple in der die Daten sind 
-            Tuple<string, string, string, string> Data = new Tuple<string, string, string, string>
-                (surname, firstname, username, studentClass);
+            Tuple<string, string, string, string, string> Data = new Tuple<string, string, string, string, string>
+                (surname, firstname, username, studentClass, abode);
 
             reader.Close();
             connection.Close();
@@ -342,7 +394,7 @@ namespace TimeBreak
             {
                 connection.Open();
             }
-            string query = "UPDATE tab_anwesenheit SET A_Endzeit=@DateStop, A_Gesamtzeit=@UnixTimestamp WHERE A_ID=@AttendanceId AND A_Datum=@Date AND M_Matrikelnummer=@User";
+            string query = "UPDATE tab_Anwesenheit SET A_Endzeit=@DateStop, A_Gesamtzeit=@UnixTimestamp WHERE A_ID=@AttendanceId AND A_Datum=@Date AND M_Matrikelnummer=@User";
             MySqlCommand sqlCommand = new MySqlCommand(query, connection);
             sqlCommand.Parameters.AddWithValue("@DateStop", DateTime.Now.ToString("HH:mm:ss"));
             sqlCommand.Parameters.AddWithValue("@UnixTimestamp", DateTime.Now.Subtract(startTime).TotalSeconds + startUnixTimestamp);
