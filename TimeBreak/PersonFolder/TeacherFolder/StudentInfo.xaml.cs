@@ -20,12 +20,12 @@ namespace TimeBreak.PersonFolder.TeacherFolder
     public partial class StudentInfo : Window
     {
         #region Fields
-        private Tuple<string, string, string, string> data;
+        private Tuple<string, string, string, string, string> data;
         #endregion
 
         #region Constructor
         //Konstruktor der ein Tuple bekommt
-        public StudentInfo(Tuple<string, string, string, string> Data)
+        public StudentInfo(Tuple<string, string, string, string, string> Data)
         {
             this.data = Data;
             // Zum zeigen da
@@ -46,6 +46,7 @@ namespace TimeBreak.PersonFolder.TeacherFolder
             Surname.Content += data.Item1;
             Username.Content += data.Item3;
             StudentClass.Content += data.Item4;
+            Abode.Content += data.Item5;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

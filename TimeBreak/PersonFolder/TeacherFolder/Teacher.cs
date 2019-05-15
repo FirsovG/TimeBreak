@@ -42,7 +42,7 @@ namespace TimeBreak
                 surname = studentSearch.Surname.Text;
                 firstname = studentSearch.Firstname.Text;
 
-                Tuple<string, string, string, string> Data = databaseConnection.GetStudentInfo(surname, firstname);
+                Tuple<string, string, string, string, string> Data = databaseConnection.GetStudentInfo(surname, firstname);
                 StudentInfo studentInfo = new StudentInfo(Data);
                 studentInfo.ShowDialog();
 
