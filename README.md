@@ -23,7 +23,7 @@ This is an school project which is made to manage breaks in school project weeks
 
 ## Made by
 
-* **German Firsov** - [FirsovDev](https://github.com/FirsovG)
+* **German Firsov**(https://github.com/FirsovG)
 
 ## Acknowledgments
 
