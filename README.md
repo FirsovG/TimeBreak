@@ -21,10 +21,6 @@ This is an school project which is made to manage breaks in school project weeks
 * [Xampp](https://www.apachefriends.org/index.html/) - Pack with MySql-Server
 * [Costura](https://github.com/Fody/Costura) - Build single .exe file
 
-## Made by
-
-* **German Firsov**(https://github.com/FirsovG)
-
 ## Acknowledgments
 
 * [WPF Design](https://www.youtube.com/channel/UCf0J9AO-KeLEkBe3ZpVpfKQ/videos)
